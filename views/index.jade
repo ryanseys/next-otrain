@@ -1,0 +1,42 @@
+input(type="hidden", id="times", value="#{stations}")
+div(class="pull-center")
+  h1= title
+    h2
+      div(id="time")
+  div(class="btn-group")
+    a(id="station_btn", class="pull-center btn btn-large dropdown-toggle", data-toggle="dropdown", href="#") Choose a station 
+      span(class="caret")
+    ul(class="pull-center dropdown-menu")
+      - var items = ["Greenboro", "Confederation", "Carleton", "Carling", "Bayview"]
+      - var i = 0
+      each item in items
+        li
+          a(onclick="setLocation('#{i}')")= item
+          - i++;
+  h1(class="c")
+    div(id="next")
+
+script
+  function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    var s=today.getSeconds();
+    // add a zero in front of numbers<10
+    m=checkTime(m);
+    s=checkTime(s);
+    document.getElementById('time').innerHTML="It's currently "+h+":"+m+":"+s;
+    getNextTime();
+    t=setTimeout('startTime()', 500);
+  }
+
+  function checkTime(i) {
+    if (i<10) {
+      i="0" + i;
+    }
+    return i;
+  }
+script(src='/javascripts/jquery-1.7.2.min.js')
+script(src="/javascripts/bootstrap-button.js")
+script(src="/javascripts/bootstrap-dropdown.js")
+script(src="/javascripts/load-times.js")

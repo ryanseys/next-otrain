@@ -33,53 +33,64 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
-
+app.get('/2', routes.location);
 var stations = [];
 
 getStations = function() {
-  return stations;
+  return JSON.stringify(stations);
 }
 
 var today = new Date();
-var options = {
-  host: 'www.octranspo1.com',
-  port: 80,
-  path: '/route/printRoute?selectRoute=750&year='+today.getFullYear()+'&month='+today.getMonth()+'&day='+today.getDate()+'&from_site=yes&direction=1&dow=2'
-};
-var doc = [];
-
-var req = http.request(options, function(res) {
-  res.setEncoding('utf8');
-  res.on('data', function (chunk) {
-    doc.push(chunk);
-  });
-  res.on('end', function(){
-    var rawHTML = doc.join('');
-    var handler = new htmlparser.DefaultHandler(function (error, dom) {
-        if (error) console.log("ERROR!");
+// direction is an integer (1 or 2)
+// 1 :: Greenboro ---> Bayview
+// 2 :: Greenboro <--- Bayview
+var downloadStations = function(direction, callback) {
+  var options = {
+    host: 'www.octranspo1.com',
+    port: 80,
+    path: '/route/printRoute?selectRoute=750&year='+today.getFullYear()+'&month='+today.getMonth()+'&day='+today.getDate()+'&from_site=yes&direction='+direction+'&dow=2'
+  };
+  var doc = [];
+  var temp_stations = [];
+  var req = http.request(options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+      doc.push(chunk);
     });
-    var parser = new htmlparser.Parser(handler);
-    parser.parseComplete(rawHTML);
-    var times = handler.dom[2].children[3].children[8].children[1].children;
-    var num_rows = times.length;
-    var num_cols = times[0].children.length - 1;
-    for(var j = 0; j < num_cols; j++) {
-      for(var i = 0; i < num_rows; i++) {
-        if(stations[j]) stations[j].push(times[i].children[j].children[0].data);
-        else stations[j] = [times[i].children[j].children[0].data];
+    res.on('end', function() {
+      var rawHTML = doc.join('');
+      var handler = new htmlparser.DefaultHandler(function (error, dom) {
+          if (error) console.log("ERROR!");
+      });
+      var parser = new htmlparser.Parser(handler);
+      parser.parseComplete(rawHTML);
+      var times = handler.dom[2].children[3].children[8].children[1].children;
+      var num_rows = times.length;
+      var num_cols = times[0].children.length - 1;
+      for(var j = 0; j < num_cols; j++) {
+        for(var i = 0; i < num_rows; i++) {
+          if(temp_stations[j]) temp_stations[j].push(times[i].children[j].children[0].data);
+          else temp_stations[j] = [times[i].children[j].children[0].data];
+        }
       }
-    }
-    stations = JSON.stringify(stations);
-    app.listen(3000, function(){
-      console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+      callback(temp_stations);
     });
+  });
+  req.on('error', function(e) {
+    console.log('problem with request: ' + e.message);
+  });
+  // write data to request body
+  req.write('data\n');
+  req.end();
+}
+
+downloadStations(1, function(times) {
+  stations.push(times);
+  downloadStations(2, function(times) {
+    stations.push(times);
   });
 });
 
-req.on('error', function(e) {
-  console.log('problem with request: ' + e.message);
+app.listen(3000, function(){
+  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
-
-// write data to request body
-req.write('data\n');
-req.end();

@@ -1,28 +1,13 @@
 var data = JSON.parse(document.getElementById("times").value);
-var names = ["Greenboro", "Confederation", "Carleton", "Carling", "Bayview"];
+var names = ["GREENBORO", "CONFEDERATION", "CARLETON", "CARLING", "BAYVIEW"];
 var station;
 var station_name;
-var current_direction = 1;
+var current_direction = 1; //default
 var current_location;
 
 function startTime() {
-  var today=new Date();
-  var h=today.getHours();
-  var m=today.getMinutes();
-  var s=today.getSeconds();
-  // add a zero in front of numbers<10
-  m=checkTime(m);
-  s=checkTime(s);
-  document.getElementById('time').innerHTML="It's currently "+h+":"+m+":"+s;
   getNextTime();
   t=setTimeout('startTime()', 500);
-}
-
-function checkTime(i) {
-  if (i<10) {
-    i="0" + i;
-  }
-  return i;
 }
 
 function setLocation(station_index) {
@@ -52,47 +37,27 @@ function getNextTime() {
       var arrival_time = times[j].split(':');
       var arrival_h = parseInt(arrival_time[0], 10);
       var arrival_m = parseInt(arrival_time[1], 10);
-      if(arrival_h < h_now) {
-        best_match = arrival_time;
-      }
-      else if(arrival_h == h_now) {
-        if(arrival_m < m_now) {
-          best_match = arrival_time;
-        }
-        else if(arrival_m == m_now) {
-          best_match = arrival_time;
-        }
-        else {
-          best_match = arrival_time;
-          break;
-        }
-      }
-      else {
-        best_match = arrival_time;
-        break;
-      }
+      best_match = arrival_time;
+      if(arrival_h > h_now) break; //if the hour is later than the current hour
+      //if the minute is later than the current minute in the current hour
+      else if((arrival_h == h_now) && (arrival_m > m_now)) break;
     }
     if(!best_match) console.log("best match not found!");
-    document.getElementById('next').innerHTML = "Next departure from "+ station_name + " is at " + best_match.join(':');
+    document.getElementById('next').innerHTML = "Next "+"<i class='icon-time'></i>"+"Train at " + best_match.join(':');
     var message = '';
-    var min_diff;
-    var hour_diff;
-    var sec_diff;
-    
-    if(s_now == 0) {
+    var min_diff = best_match[1] - m_now - 1;
+    var hour_diff = best_match[0] - h_now;
+    var sec_diff = 60 - s_now;
+    if(sec_diff == 60) {
       sec_diff = 0;
-      min_diff = best_match[1] - m_now;
-      hour_diff = best_match[0] - h_now;
+      min_diff++;
     }
-    else {
-      sec_diff = 60 - s_now;
-      min_diff = best_match[1] - m_now - 1;
-      hour_diff = best_match[0] - h_now;
-      if(min_diff < 0) {
-        min_diff = 60 + min_diff;
-        hour_diff = best_match[0] - h_now - 1;
-      }
+    
+    if(min_diff < 0) {
+      min_diff += 60;
+      hour_diff--;
     }
+    
     document.getElementById('next').innerHTML += " in " + hour_diff + "h:" + min_diff + "m:" + sec_diff+"s";
   }
   else console.log("No station found");
@@ -102,14 +67,11 @@ function toggleDirection() {
   if(current_direction == 1) {
     current_direction = 2;
     $(".arrows").removeClass('icon-arrow-down').addClass('icon-arrow-up');
-    //$("#bottom-icon").removeClass('icon-minus-sign');
-    //$("#top-icon").addClass('icon-minus-sign');
   }
   else {
     current_direction = 1;
     $(".arrows").removeClass('icon-arrow-up').addClass('icon-arrow-down');
-    //$("#top-icon").removeClass('icon-minus-sign');
-    //$("#bottom-icon").addClass('icon-minus-sign');
   }
   setLocation(current_location);
+  $("#location" + current_location).select();
 }

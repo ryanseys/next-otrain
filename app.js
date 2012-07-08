@@ -33,11 +33,11 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
-app.get('/2', routes.location);
+
 var stations = [];
 
 getStations = function() {
-  return JSON.stringify(stations);
+  return stations;
 }
 
 var today = new Date();
@@ -88,9 +88,9 @@ downloadStations(1, function(times) {
   stations.push(times);
   downloadStations(2, function(times) {
     stations.push(times);
+    stations = JSON.stringify(stations);
+    app.listen(3000, function(){
+      console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+    });
   });
-});
-
-app.listen(3000, function(){
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });

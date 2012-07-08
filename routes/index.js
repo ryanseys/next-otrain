@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res) {
-  res.render('index', { title: 'Next O-Train', stations: getStations(), location: 1 });
+  res.render('index', { title: 'Next OTrain', stations: getStations() });
 };

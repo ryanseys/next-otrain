@@ -1,22 +1,32 @@
+script
+  // When ready...
+  window.addEventListener("load", function() {
+    // Set a timeout...
+    setTimeout(function() {
+      // Hide the address bar!
+      window.scrollTo(0, 1);
+    }, 0);
+  });
+
 input(type="hidden", id="times", value="#{stations}")
 div(class="pull-center")
-  h1(id="title")= title
+  h1(id="title") 
+    i Next <i class="icon-time"></i>Train
     h2
-      div(id="time") choose a station
+    br
     ul(id="stations", class="nav nav-tabs nav-stacked")
       - var items = ["Greenboro", "Confederation", "Carleton", "Carling", "Bayview"]
       - var i = 0
       each item in items
         li
           i(id="top-icon")
-          a(onclick="setLocation('#{i}')")= item  
+          a(id="location#{i}", class="tab-pane", data-toggle="button", onclick="setLocation('#{i}')", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item  
           if(i!=4) 
             i(class="arrows icon-arrow-down")
           - i++;
       i(id="bottom-icon", class="")
-    a(id="switch_dir", class="pull-center btn btn-large dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
-  h1
-    div(id="next")
+    a(id="switch_dir", class="pull-center btn btn-large btn-info dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
+  h1(id="next")
 
 script(src='/javascripts/jquery-1.7.2.min.js')
 script(src="/javascripts/bootstrap.min.js")

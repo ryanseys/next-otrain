@@ -61,7 +61,6 @@ function getNextTime() {
         }
         else if(arrival_m == m_now) {
           best_match = arrival_time;
-          break;
         }
         else {
           best_match = arrival_time;
@@ -73,16 +72,27 @@ function getNextTime() {
         break;
       }
     }
-    if(!best_match) best_match = times[0].split(':');
-    document.getElementById('next').innerHTML = "Next departure for "+ station_name + " :" + best_match.join(':');
+    if(!best_match) console.log("best match not found!");
+    document.getElementById('next').innerHTML = "Next departure from "+ station_name + " is at " + best_match.join(':');
     var message = '';
-    var min_diff = best_match[1] - m_now - 1;
-    var hour_diff = best_match[0] - h_now;
-    if (min_diff < 0) {
-      min_diff= 60+min_diff;
-      hour_diff -= 1;
+    var min_diff;
+    var hour_diff;
+    var sec_diff;
+    
+    if(s_now == 0) {
+      sec_diff = 0;
+      min_diff = best_match[1] - m_now;
+      hour_diff = best_match[0] - h_now;
     }
-    var sec_diff = 60 - s_now;
+    else {
+      sec_diff = 60 - s_now;
+      min_diff = best_match[1] - m_now - 1;
+      hour_diff = best_match[0] - h_now;
+      if(min_diff < 0) {
+        min_diff = 60 + min_diff;
+        hour_diff = best_match[0] - h_now - 1;
+      }
+    }
     document.getElementById('next').innerHTML += " in " + hour_diff + "h:" + min_diff + "m:" + sec_diff+"s";
   }
   else console.log("No station found");

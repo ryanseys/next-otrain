@@ -124,6 +124,7 @@ downloadStations(1, 3, function(times) {
 */
 
 //build stations as [weekday, saturday, sunday]
+var port = process.env.PORT || 5000;
 
 fs.readFile('./times-weekday', 'utf8', function (err, data) {
   if (err) throw err;
@@ -138,8 +139,9 @@ fs.readFile('./times-weekday', 'utf8', function (err, data) {
           else {
             stations.push(JSON.parse(data));
             stations = JSON.stringify(stations);
-            app.listen(3001, function() {
-              console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+            
+            app.listen(port, function() {
+              console.log("Listening on " + port);
             });
           }
         });

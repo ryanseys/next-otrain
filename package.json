@@ -1,11 +1,14 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.11"
-    , "jade": ">= 0.0.1"
-    , "jsdom": ">= 0.2.14"
-    , "htmlparser": ">= 1.7.6"
+  "name": "next-otrain",
+  "version": "0.0.1", 
+  "dependencies": {
+    "express": "2.5.11",
+    "jade": ">= 0.0.1",
+    "jsdom": ">= 0.2.14",
+    "htmlparser": ">= 1.7.6"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
   }
 }

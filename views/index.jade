@@ -19,14 +19,12 @@ div(class="pull-center")
       - var i = 0
       each item in items
         li
-          i(id="top-icon")
-          a(id="location#{i}", class="tab-pane", data-toggle="button", onclick="setLocation('#{i}')", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item  
+          a(id="location#{i}", class="tab-pane", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item  
           if(i!=4) 
             i(class="arrows icon-arrow-down")
           - i++;
-      i(id="bottom-icon", class="")
     a(id="switch_dir", class="pull-center btn btn-large btn-info dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
-  h1(id="next")
+  h2(id="next")
 
 script(src='/javascripts/jquery-1.7.2.min.js')
 script(src="/javascripts/bootstrap.min.js")

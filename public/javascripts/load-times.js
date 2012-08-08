@@ -2,22 +2,31 @@ var data = JSON.parse(document.getElementById("times").value);
 var names = ["GREENBORO", "CONFEDERATION", "CARLETON", "CARLING", "BAYVIEW"];
 var station;
 var station_name;
-var current_direction = 1; //default
+var current_direction = 0; //default
 var current_location;
+var dow;
 
 function startTime() {
   getNextTime();
-  t=setTimeout('startTime()', 500);
+  setTimeout('startTime()', 500);
 }
 
 function setLocation(station_index) {
-  current_location = parseInt(station_index, 10);
-  if(current_direction == 1) {
-    station = data[current_direction-1][current_location];
+  var day;
+  
+  if(!dow) dow = (new Date()).getDay();
+  
+  if(dow == 0) day = 2;
+  else if(dow == 6) day = 1;
+  else day = 0;
+  
+  current_location = station_index;
+  if(current_direction == 0) {
+    station = data[day][current_direction][current_location];
     station_name = names[current_location];
   }
   else {
-    station = data[current_direction-1][names.length-1-current_location];
+    station = data[day][current_direction][names.length-1-current_location];
     station_name = names[current_location];
   }
   getNextTime();
@@ -27,6 +36,12 @@ function getNextTime() {
   if(!station_name) station_name = "Choose a station ";
   if(station) {
     var now = new Date();
+    var d = now.getDay();
+    if(d != dow) {
+      dow = d;
+      setLocation(current_location);
+    }
+    
     var h_now = now.getHours();
     var m_now = now.getMinutes();
     var s_now = now.getSeconds();
@@ -52,24 +67,21 @@ function getNextTime() {
       sec_diff = 0;
       min_diff++;
     }
-    
     if(min_diff < 0) {
       min_diff += 60;
       hour_diff--;
     }
-    
-    document.getElementById('next').innerHTML += " in " + hour_diff + "h:" + min_diff + "m:" + sec_diff+"s";
+    document.getElementById('next').innerHTML += " in " + hour_diff + "h:" + min_diff + "m:" + sec_diff + "s";
   }
-  else console.log("No station found");
 }
 
 function toggleDirection() {
-  if(current_direction == 1) {
-    current_direction = 2;
+  if(current_direction == 0) {
+    current_direction = 1;
     $(".arrows").removeClass('icon-arrow-down').addClass('icon-arrow-up');
   }
   else {
-    current_direction = 1;
+    current_direction = 0;
     $(".arrows").removeClass('icon-arrow-up').addClass('icon-arrow-down');
   }
   setLocation(current_location);

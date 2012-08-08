@@ -25,7 +25,28 @@ div(class="pull-center")
           - i++;
     a(id="switch_dir", class="pull-center btn btn-large btn-info dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
   h2(id="next")
+hr
+div(class="footer") Created by 
+  a(href="http://twitter.com/ryanseys/") Ryan Seys
 
 script(src='/javascripts/jquery-1.7.2.min.js')
 script(src="/javascripts/bootstrap.min.js")
 script(src="/javascripts/load-times.js")
+script
+  //uservoice feedback
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/9XBoblHGevZr739GvY1dPQ.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
+  //google analytics
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33989135-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  

@@ -18,12 +18,12 @@ div(class="pull-center")
       - var items = ["Greenboro", "Confederation", "Carleton", "Carling", "Bayview"]
       - var i = 0
       each item in items
-        li
+        li(id="locationli#{i}")
           a(id="location#{i}", class="tab-pane", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item  
           if(i!=4) 
             i(class="arrows icon-arrow-down")
           - i++;
-    a(id="switch_dir", class="pull-center btn btn-large btn-info dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
+    a(id="switch_dir", class="pull-center btn btn-large btn-primary dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
   h2(id="next")
 hr
 div(class="pull-center") 
@@ -31,15 +31,11 @@ div(class="pull-center")
   span &copy; 2012 
   a(href="http://twitter.com/ryanseys", target="_blank") Ryan Seys
   span . All Rights Reserved
-form(action="https://www.paypal.com/cgi-bin/webscr", method="post", class="pull-center", style="margin-top:4px")  
-  input(type="hidden", name="cmd", value="_s-xclick")
-  input(type="hidden", name="encrypted", value="-----BEGIN PKCS7-----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-----END PKCS7-----")  
-  input(type="image", src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif", border="0px", name="submit", alt="PayPal - The safer, easier way to pay online!")  
-  img(alt="", border="0", src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif", width="1", height="1")
-  a(class="btn btn-primary btn-mini icon-bullhorn", style="margin-left:4px", href="javascript:UserVoice.showPopupWidget();", title="Open feedback & support dialog (powered by UserVoice)")  feedback & support
+div(class="pull-center", style="margin-top:4px")
+  a(class="btn btn-success btn-mini icon-credit-card", href="https://www.paypal.com/webscr?cmd=_donations&business=rsmseys@gmail.com&item_name=Donate&currency_code=CAD")  Donate
+  a(class="btn btn-info btn-mini icon-bullhorn", style="margin-left:4px", href="javascript:UserVoice.showPopupWidget();", title="Open feedback & support dialog (powered by UserVoice)")  feedback & support
 script(src='/js/jquery-1.7.2.min.js')
 script(src="/js/bootstrap.min.js")
-//script(src="/javascripts/load-times.js")
 !=compactJsHtml()
 script
   //uservoice feedback

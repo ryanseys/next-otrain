@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # update rev to reset cache
-# rev: 5
+# rev: 7
 
 # save these in cache
 CACHE:
@@ -12,6 +12,7 @@ CACHE:
 /FontAwesome.ttf
 /img/favicon.png
 /img/iphone-icon.png
+/img/btn_donate_SM.gif
 /js/bootstrap.min.js
 /js/jquery-1.7.2.min.js
 /js/global.js
@@ -20,8 +21,6 @@ CACHE:
 /stylesheets/font-awesome-ie7.css
 /stylesheets/font-awesome.css
 /stylesheets/style.css
-https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif
-https://www.paypalobjects.com/en_US/i/scr/pixel.gif
 
 # everything else requires network
 NETWORK:

@@ -12,6 +12,8 @@ function startTime() {
 }
 
 function setLocation(stn_i) {
+  $('.alert-info').removeClass('alert-info');
+  $("#location" + stn_i).addClass('alert-info');
   var day;
   
   if(!dow) dow = (new Date()).getDay();

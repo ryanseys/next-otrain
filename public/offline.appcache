@@ -20,6 +20,8 @@ CACHE:
 /stylesheets/font-awesome-ie7.css
 /stylesheets/font-awesome.css
 /stylesheets/style.css
+https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif
+https://www.paypalobjects.com/en_US/i/scr/pixel.gif
 
 # everything else requires network
 NETWORK:

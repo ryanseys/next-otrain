@@ -12,6 +12,18 @@ var htmlparser = require("htmlparser");
 var app = module.exports = express.createServer();
 var fs = require('fs');
 
+var compact = require('compact').createCompact({
+  srcPath: __dirname + '/js/',
+  destPath: __dirname + '/public/js/',
+  webPath: '/js/',
+  debug: false
+});
+
+compact.addNamespace('global');
+
+compact.ns.global
+  .addJs('/load-times.js');
+
 // Configuration
 
 app.configure(function(){
@@ -33,7 +45,7 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.index);
+app.get('/', compact.js(['global']), routes.index);
 
 var stations = [];
 
@@ -149,3 +161,14 @@ fs.readFile('./times-weekday', 'utf8', function (err, data) {
     });
   }
 });
+
+var mime = require('mime');
+
+console.log("mime: " + mime.lookup('./public/offline.appcache'));
+
+/*
+app.get("/offline.manifest", function(req, res){
+  res.header("Content-Type", "text/cache-manifest");
+  res.end("CACHE MANIFEST");//\nCACHE:\n/\n/font/fontawesome-webfont.eot\n/font/fontawesome-webfont.svg\n/font/fontawesome-webfont.ttf\n/font/fontawesome-webfont.woff\n/FontAwesome.ttf\n/img/favicon.png\nimg/glyphicons-halflings-white.png\n/img/glyphicons-halflings.png\n/img/iphone-icon.png\n/javascripts/bootstrap.min.js\n/javascripts/jquery-1.7.2.min.js\n/javascripts/load-times.js\n/stylesheets/bootstrap-responsive.min.css\n/stylesheets/bootstrap.min.css\n/stylesheets/font-awesome-ie7.css\n/stylesheets/font-awesome.css\n/stylesheets/style.css\n\nNETWORK:\nhttp://widget.uservoice.com/9XBoblHGevZr739GvY1dPQ.js\nhttp://www.google-analytics.com/ga.js\nhttps://www.paypalobjects.com/en_US/i/scr/pixel.gif\nhttps://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif\n");
+});
+*/

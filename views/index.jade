@@ -37,9 +37,10 @@ form(action="https://www.paypal.com/cgi-bin/webscr", method="post", class="pull-
   input(type="image", src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif", border="0px", name="submit", alt="PayPal - The safer, easier way to pay online!")  
   img(alt="", border="0", src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif", width="1", height="1")
   a(class="btn btn-primary btn-mini icon-bullhorn", style="margin-left:4px", href="javascript:UserVoice.showPopupWidget();", title="Open feedback & support dialog (powered by UserVoice)")  feedback & support
-script(src='/javascripts/jquery-1.7.2.min.js')
-script(src="/javascripts/bootstrap.min.js")
-script(src="/javascripts/load-times.js")
+script(src='/js/jquery-1.7.2.min.js')
+script(src="/js/bootstrap.min.js")
+//script(src="/javascripts/load-times.js")
+!=compactJsHtml()
 script
   //uservoice feedback
   var uvOptions = {};

@@ -5,7 +5,9 @@
     "express": "2.5.11",
     "jade": ">= 0.0.1",
     "jsdom": ">= 0.2.14",
-    "htmlparser": ">= 1.7.6"
+    "htmlparser": ">= 1.7.6",
+    "mime": ">= 1.2.7",
+    "compact": ">= 0.1.0"
   },
   "engines": {
     "node": "0.8.x",

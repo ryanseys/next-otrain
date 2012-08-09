@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # update rev to reset cache
-# rev: 9
+# rev: 11
 
 # save these in cache
 CACHE:
@@ -12,7 +12,6 @@ CACHE:
 /FontAwesome.ttf
 /img/favicon.png
 /img/iphone-icon.png
-/img/btn_donate_SM.gif
 /js/bootstrap.min.js
 /js/jquery-1.7.2.min.js
 /js/global.js

@@ -21,7 +21,7 @@ div(class="pull-center")
         li(id="locationli#{i}")
           a(id="location#{i}", class="tab-pane", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item  
           if(i!=4) 
-            i(class="arrows icon-arrow-down")
+            i(class="arrows icon-arrow-down", style="margin-top:2px; font-size:18px")
           - i++;
     a(id="switch_dir", class="pull-center btn btn-large btn-primary dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
   h2(id="next")

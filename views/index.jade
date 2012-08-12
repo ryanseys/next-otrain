@@ -6,14 +6,15 @@ div(class="pull-center")
     - var items = ["Greenboro", "Confederation", "Carleton", "Carling", "Bayview"]
     - var i = 0
     each item in items
+      a(href='#', class="btn icon-time", style='float:right; position:relative; top:3px; left:-4px;') 's
+      div(style='float:left; position:relative; width:42px; height:29px; top:3px; left:4px; cursor: pointer; z-index:-1;', onclick="setLocation(#{i})")
       li(id="locationli#{i}")
-        a(id="location#{i}", class="tab-pane", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item  
+        a(id="location#{i}", class="tab-pane pull-center", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item
         if(i!=4) 
-          //style="margin-top:2px; font-size:18px")
           i(class="arrows icon-arrow-down")
         - i++;
   a(id="switch_dir", class="pull-center btn btn-large btn-primary dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
-  h2(id="next")
+  h2(id='next', style='padding-top:8px')
 hr
 div(class="pull-center") 
   span(class="hidden-phone") Copyright 
@@ -25,4 +26,5 @@ div(class="pull-center", style="margin-top:4px")
   a(class="btn btn-info btn-mini icon-bullhorn", style="margin-left:4px", href="javascript:UserVoice.showPopupWidget();", title="Open feedback & support dialog (powered by UserVoice)")  feedback & support
 != js('jquery-1.7.2.min')
 != js('bootstrap.min')
+!= js('bootstrap-tab')
 != js('next-otrain')

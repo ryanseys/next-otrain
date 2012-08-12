@@ -8,6 +8,11 @@ body {
   text-align: center;
 }
 
+.offset-btn {
+  position:relative;
+  left: -4px;
+}
+
 #titlelink {
   text-decoration:none;
   color:#333;

@@ -7,6 +7,7 @@ div(class="pull-center")
     - var i = 0
     each item in items
       a(href='#', class="btn icon-time", style='float:right; position:relative; top:3px; left:-4px;') 's
+      //this div below is the same size as the button above. It is to maintain centering of the text in the list element
       div(style='float:left; position:relative; width:42px; height:29px; top:3px; left:4px; cursor: pointer; z-index:-1;', onclick="setLocation(#{i})")
       li(id="locationli#{i}")
         a(id="location#{i}", class="tab-pane pull-center", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item
@@ -26,5 +27,4 @@ div(class="pull-center", style="margin-top:4px")
   a(class="btn btn-info btn-mini icon-bullhorn", style="margin-left:4px", href="javascript:UserVoice.showPopupWidget();", title="Open feedback & support dialog (powered by UserVoice)")  feedback & support
 != js('jquery-1.7.2.min')
 != js('bootstrap.min')
-!= js('bootstrap-tab')
 != js('next-otrain')

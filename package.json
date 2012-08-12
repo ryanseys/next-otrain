@@ -2,12 +2,13 @@
   "name": "next-otrain",
   "version": "0.0.1", 
   "dependencies": {
+    "connect" : "2.x",
     "express": "2.5.11",
     "jade": ">= 0.0.1",
     "jsdom": ">= 0.2.14",
     "htmlparser": ">= 1.7.6",
-    "mime": ">= 1.2.7",
-    "compact": ">= 0.1.0"
+    "connect-assets": ">= 2.2.1",
+    "connect-gzip": ">= 0.1.6"
   },
   "engines": {
     "node": "0.8.x",

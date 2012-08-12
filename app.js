@@ -3,36 +3,27 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes');
-  
-var http = require('http');
-var util = require('util');
-var htmlparser = require("htmlparser");
-var app = module.exports = express.createServer();
-var fs = require('fs');
-
-var compact = require('compact').createCompact({
-  srcPath: __dirname + '/js/',
-  destPath: __dirname + '/public/js/',
-  webPath: '/js/',
-  debug: false
-});
-
-compact.addNamespace('global');
-
-compact.ns.global
-  .addJs('/load-times.js');
+var express = require('express'),
+    routes = require('./routes'),
+    gzip = require('connect-gzip'),
+    http = require('http'),
+    util = require('util'),
+    htmlparser = require("htmlparser"),
+    app = module.exports = express.createServer(),
+    fs = require('fs');
 
 // Configuration
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.use(gzip.gzip());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.static(__dirname + '/public'));
+  app.use(require("connect-assets")());
+
   app.use(app.router);
-  app.use(express['static'](__dirname + '/public'));
 });
 
 app.configure('development', function(){
@@ -45,7 +36,8 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', compact.js(['global']), routes.index);
+app.get('/', routes.index);
+app.get('/times.json', routes.times);
 
 var stations = [];
 

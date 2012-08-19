@@ -5,7 +5,7 @@
 
 var express = require('express'),
     routes = require('./routes'),
-    gzip = require('connect-gzip'),
+    //gzip = require('connect-gzip'),
     http = require('http'),
     util = require('util'),
     htmlparser = require("htmlparser"),
@@ -17,12 +17,11 @@ var express = require('express'),
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.use(gzip.gzip());
+  //app.use(gzip.gzip());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));
-  app.use(require("connect-assets")());
-
+  //app.use(require("connect-assets")());
   app.use(app.router);
 });
 
@@ -38,6 +37,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.get('/times.json', routes.times);
+app.get('/time.html*', routes.time);
 
 var stations = [];
 
@@ -143,7 +143,6 @@ fs.readFile('./times-weekday', 'utf8', function (err, data) {
           else {
             stations.push(JSON.parse(data));
             stations = JSON.stringify(stations);
-            
             app.listen(port, function() {
               console.log("Listening on " + port);
             });

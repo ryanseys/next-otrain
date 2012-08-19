@@ -1,30 +1,38 @@
-div(class="pull-center")
-  h1(id="title")
-    a(id="titlelink", href='/') Next <i class="icon-time"></i>Train
-  div(class='spacer')
-  ul(id="stations", class="nav nav-tabs nav-stacked")
-    - var items = ["Greenboro", "Confederation", "Carleton", "Carling", "Bayview"]
-    - var i = 0
-    each item in items
-      a(href='#', class="btn icon-time", style='float:right; position:relative; top:3px; left:-4px;') 's
-      //this div below is the same size as the button above. It is to maintain centering of the text in the list element
-      div(style='float:left; position:relative; width:42px; height:29px; top:3px; left:4px; cursor: pointer; z-index:-1;', onclick="setLocation(#{i})")
-      li(id="locationli#{i}")
-        a(id="location#{i}", class="tab-pane pull-center", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item
-        if(i!=4) 
-          i(class="arrows icon-arrow-down")
-        - i++;
-  a(id="switch_dir", class="pull-center btn btn-large btn-primary dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
-  h2(id='next', style='padding-top:8px')
-hr
-div(class="pull-center") 
-  span(class="hidden-phone") Copyright 
-  span &copy; 2012 
-  a(href="http://twitter.com/ryanseys", target="_blank") Ryan Seys
-  span . All Rights Reserved
-div(class="pull-center", style="margin-top:4px")
-  a(class="btn btn-success btn-mini icon-heart", title="Buy me a coffee", target="_blank", href="https://www.paypal.com/webscr?cmd=_donations&business=rsmseys@gmail.com&item_name=Donate&currency_code=CAD")  Donate
-  a(class="btn btn-info btn-mini icon-bullhorn", style="margin-left:4px", href="javascript:UserVoice.showPopupWidget();", title="Open feedback & support dialog (powered by UserVoice)")  feedback & support
-!= js('jquery-1.7.2.min')
-!= js('bootstrap.min')
-!= js('next-otrain')
+body(onload="startTime()")
+  //required libraries
+  script(src='js/jquery-1.7.2.min.js')
+  script(src="js/jquery.pageslide.min.js")
+  script(src='js/bootstrap.min.js')
+
+  - var items = ["Greenboro", "Confederation", "Carleton", "Carling", "Bayview"]
+  div(id='stationlist', class="pull-center")
+    h1(id="title")
+      a(id="titlelink", href='/') Next <i class="icon-time"></i>Train
+    div(class='spacer')
+    ul(id="stations", class="nav nav-tabs nav-stacked")
+      - var i = 0
+      each item in items
+        //a(href="javascript:$.pageslide({ direction: 'left', href:'time.html?s=#{i}&d=0' })", class="stntimebtn btn icon-time", style='float:right; position:relative; top:3px; left:-4px;') 's
+        //this div below is the same size as the button above. It is to maintain centering of the text in the list element
+        //div(style='float:left; position:relative; width:42px; height:29px; top:3px; left:4px; z-index:-1;')
+        li(id="locationli#{i}")
+          a(id="location#{i}", class="tab-pane pull-center", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item
+          if(i!=4) 
+            i(class="arrows icon-arrow-down")
+          - i++;
+        
+    a(id="switch_dir", class="pull-center btn btn-large btn-primary dropdown-toggle icon-refresh", data-toggle="dropdown", onclick="toggleDirection()")  Switch direction 
+    h2(id='next', style='padding-top:8px')
+  hr
+  div(class="pull-center") 
+    span(class="hidden-phone") Copyright 
+    span &copy; 2012 
+    a(href="http://twitter.com/ryanseys", target="_blank") Ryan Seys
+    span . All Rights Reserved
+  div(style="margin-top:4px", class="pull-center")
+    a(class="btn btn-success btn-mini icon-heart", title="Buy me a coffee", target="_blank", href="https://www.paypal.com/webscr?cmd=_donations&business=rsmseys@gmail.com&item_name=Donate&currency_code=CAD")  Donate
+    a(class="btn btn-info btn-mini icon-bullhorn", style="margin-left:4px", href="javascript:UserVoice.showPopupWidget();", title="Open feedback & support dialog (powered by UserVoice)")  feedback & support
+  //add personal script
+  script(src='js/next-otrain.js')
+
+

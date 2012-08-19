@@ -1,0 +1,20 @@
+script(src='js/jquery-1.7.2.min.js')
+script(src="js/jquery.pageslide.min.js")
+body(class='pull-center')
+  input(id='sid', type='hidden', s='#{id}', d="#{d}")
+  - if (d == 0)
+    h3(class='icon-arrow-down')   #{station} 
+      span(class='icon-time') 's  
+      span(class='icon-arrow-down')
+  - if (d == 1)
+      h3(class='icon-arrow-up')   #{station} 
+        span(class='icon-time') 's  
+        span(class='icon-arrow-up')
+  
+  ul(id="timestations", class="nav nav-tabs nav-stacked")
+  //use parent to run code in window rather than iframe
+  a(class='btn btn-primary', onclick="javascript:parent.$.pageslide.close();") Close
+  br
+  br
+  br
+  script(src='js/time.js')

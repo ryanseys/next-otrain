@@ -1,0 +1,24 @@
+body {
+  padding-left: 20px;
+  padding-right:20px;
+  padding-top:10px;
+}
+
+.pull-center {
+  text-align: center;
+}
+
+.offset-btn {
+  position:relative;
+  left: -4px;
+}
+
+#titlelink {
+  text-decoration:none;
+  color:#333;
+  font-style:italic;
+}
+
+.spacer {
+  padding-top: 8px;
+}

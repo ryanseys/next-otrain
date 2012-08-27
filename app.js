@@ -56,7 +56,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.get('/times.json', routes.times);
-app.get('/time.html*', routes.time);
+//app.get('/time.html*', routes.time);
 
 var stations = [];
 
@@ -151,8 +151,6 @@ function createFile(filename, dow) {
 //createFile('./times-sunday', 3);
 //createFile('./times-saturday', 2);
 //createFile('./times-weekday', 1);
-
-
 
 //build stations as [weekday, saturday, sunday]
 var port = process.env.PORT || 5000;

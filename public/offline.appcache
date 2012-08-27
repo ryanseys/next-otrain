@@ -15,15 +15,13 @@ CACHE:
 /js/bootstrap.min.js
 /js/jquery-1.7.2.min.js
 /js/jquery.pageslide.min.js
-/js/next-otrain.js
-/js/time.js
+/js/next-otrain.min.js
 /css/bootstrap-responsive.min.css
 /css/jquery.pageslide.css
 /css/bootstrap.min.css
 /css/font-awesome-ie7.css
 /css/font-awesome.css
 /css/style.css
-
 
 # everything else requires network
 NETWORK:

@@ -6,6 +6,7 @@
 var express = require('express'),
     routes = require('./routes'),
     //gzip = require('connect-gzip'),
+    compressor = require('node-minify'),
     http = require('http'),
     util = require('util'),
     htmlparser = require("htmlparser"),
@@ -21,10 +22,28 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));
-  //app.use(require("connect-assets")());
   app.use(app.router);
 });
 
+new compressor.minify({
+    type: 'uglifyjs',
+    fileIn: 'assets/js/next-otrain.js',
+    fileOut: 'public/js/next-otrain.min.js',
+    callback: function(err) {
+      if(err) console.log(err);
+    }
+});
+
+/*
+new compressor.minify({
+    type: 'uglifyjs',
+    fileIn: 'assets/js/time.js',
+    fileOut: 'public/js/time.min.js',
+    callback: function(err) {
+      if(err) console.log(err);
+    }
+});
+*/
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
@@ -99,33 +118,41 @@ var downloadStations = function(direction, dow, callback) {
   req.end();
 };
 
-/*
-var filename = "./times-sunday";
+function createFile(filename, dow) {
+  var array = [];
+  downloadStations(1, dow, function(times) {
+    if(times) {
+      console.log("times: " + times.toString());
+      array.push(times);
+      downloadStations(2, dow, function(times2) {
+        if(times2) {
+          console.log("times2: " +times2.toString());
+          array.push(times2);
+          array = JSON.stringify(array);
+          //save the times to a file
+          fs.writeFile(filename, array, function(err) {
+              if(err) {
+                  console.log(err);
+              } else {
+                  console.log("The times were saved to " + filename);
+              }
+          });
+        }
+      });
+    }
+  });
+}
 
-downloadStations(1, 3, function(times) {
-  if(times) {
-    stations.push(times);
-    downloadStations(2, 3, function(times) {
-      if(times) {
-        stations.push(times);
-        stations = JSON.stringify(stations);
-        //save the times to a file
-        fs.writeFile(filename, stations, function(err) {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log("The times were saved to " + filename);
-            }
-        });
-        app.listen(3001, function() {
-          console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-        });
-      }
-    });
-  }
-});
+// Re-download all the files
+// *** Be careful because sometimes the 
+// octranspo server returns the same 
+// time for different directions ***
 
-*/
+//createFile('./times-sunday', 3);
+//createFile('./times-saturday', 2);
+//createFile('./times-weekday', 1);
+
+
 
 //build stations as [weekday, saturday, sunday]
 var port = process.env.PORT || 5000;

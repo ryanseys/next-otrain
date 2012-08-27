@@ -8,7 +8,8 @@
     "jsdom": ">= 0.2.14",
     "htmlparser": ">= 1.7.6",
     "connect-assets": ">= 2.2.1",
-    "connect-gzip": ">= 0.1.6"
+    "connect-gzip": ">= 0.1.6",
+    "node-minify": ">= 0.4.2"
   },
   "engines": {
     "node": "0.8.x",

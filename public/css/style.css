@@ -22,3 +22,11 @@ body {
 .spacer {
   padding-top: 8px;
 }
+
+#hud {
+  opacity:0;
+  width:200px;
+  left:50%;
+  position:absolute;
+  margin-left: -100px;
+}

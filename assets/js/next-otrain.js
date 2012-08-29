@@ -8,7 +8,8 @@ $.get(
        data = JSON.parse(json);
     }
 );
-var station_names = ["GREENBORO", "CONFEDERATION", "CARLETON", "CARLING", "BAYVIEW"]; //station names
+//var station_names = ["GREENBORO", "CONFEDERATION", "CARLETON", "CARLING", "BAYVIEW"]; //station names
+var station_names = ["BAYVIEW", "CARLING", "CARLETON", "CONFEDERATION", "GREENBORO"];
 var station_id; //station id
 var curr_station_name; //current station name
 var direction = 0; //current direction (0 or 1)
@@ -37,17 +38,17 @@ function setLocation(station_index) {
 
   station_location = station_index;
   if(station_location == 0) {
-    if(direction == 1) {
-      toggleDirection();
-    }
-  }
-  else if(station_location == 4) {
     if(direction == 0) {
       toggleDirection();
     }
   }
+  else if(station_location == 4) {
+    if(direction == 1) {
+      toggleDirection();
+    }
+  }
   if(data) {
-    station_id = direction == 0 ? data[day][direction][station_location] : data[day][direction][station_names.length-1-station_location];
+    station_id = direction == 1 ? data[day][direction][station_location] : data[day][direction][4-station_location];
     curr_station_name = station_names[station_location];
   }
   getNextTime();
@@ -80,11 +81,11 @@ function getNextTime() {
       else if (dayofweek == 5) day = 1; //its friday, next day is sat (1)
       else day = 0; //its sunday thru thursday (0)
       
-      if(direction == 0) { //first direction
+      if(direction == 1) { //first direction
         best_match = data[day][direction][station_location][0].split(':');
       }
       else { //second direction
-        best_match = data[day][direction][station_names.length-1-station_location][0].split(':');
+        best_match = data[day][direction][4-station_location][0].split(':');
       }
     }
     document.getElementById('next').innerHTML = "Next "+"<i class='icon-time'></i>"+"Train at " + best_match.join(':');
@@ -119,11 +120,11 @@ function toggleDirection() {
   var old_direction = direction;
   if(direction == 0) {
     direction = 1;
-    $(".arrows").removeClass('icon-arrow-down').addClass('icon-arrow-up');
+    $(".arrows").removeClass('icon-arrow-up').addClass('icon-arrow-down');
   }
   else {
     direction = 0;
-    $(".arrows").removeClass('icon-arrow-up').addClass('icon-arrow-down');
+    $(".arrows").removeClass('icon-arrow-down').addClass('icon-arrow-up');
   }
   setLocation(station_location);
   $("#hud").css('display', '');
@@ -145,29 +146,34 @@ function toggleDirection() {
 document.getElementById('hud').style.top = document.getElementById('locationli2').offsetTop + 25 + "px";
 $("#hud").css('display', 'none');
 
-//uservoice feedback
-var uvOptions = {};
-(function() {
-  var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-  uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/9XBoblHGevZr739GvY1dPQ.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-})();
-
-//google analytics
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-33989135-1']);
-_gaq.push(['_trackPageview']);
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
 // When ready...
 window.addEventListener("load", function() {
-  // Set a timeout...
-  setTimeout(function() {
-    // Hide the address bar!
-    window.scrollTo(0, 1);
-  }, 0);
+  //fb like button asyncronous load
+  window.fbAsyncInit = function() {
+      FB.init({status: true, cookie: true, xfbml: true});
+    };
+    (function() {
+      var e = document.createElement('script'); e.async = true;
+      e.src = document.location.protocol +
+        '//connect.facebook.net/en_US/all.js';
+      document.getElementById('fb-root').appendChild(e);
+    }());
+  
+  //google analytics
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33989135-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  
+  //uservoice feedback
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/9XBoblHGevZr739GvY1dPQ.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
 });

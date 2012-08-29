@@ -2,11 +2,11 @@ script(src='js/jquery-1.7.2.min.js')
 script(src="js/jquery.pageslide.min.js")
 body(class='pull-center')
   input(id='sid', type='hidden', s='#{id}', d="#{d}")
-  - if (d == 0)
+  - if (d == 1)
     h3(class='icon-arrow-down')   #{station} 
       span(class='icon-time') 's  
       span(class='icon-arrow-down')
-  - if (d == 1)
+  - if (d == 0)
       h3(class='icon-arrow-up')   #{station} 
         span(class='icon-time') 's  
         span(class='icon-arrow-up')

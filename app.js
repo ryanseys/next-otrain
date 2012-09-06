@@ -66,8 +66,6 @@ getStations = function() {
 };
 
 // direction is an integer (1 or 2)
-// 1 :: Greenboro ---> Bayview
-// 2 :: Greenboro <--- Bayview
 
 // dow (day of week) is an integer (1, 2 or 3)
 // 1 :: Weekday
@@ -127,6 +125,9 @@ function createFile(filename, dow) {
       array.push(times);
       downloadStations(2, dow, function(times2) {
         if(times2) {
+          if(times == times2) {
+            console.log("EQUAL!!!");
+          }
           console.log("times2: " +times2.toString());
           array.push(times2);
           array = JSON.stringify(array);

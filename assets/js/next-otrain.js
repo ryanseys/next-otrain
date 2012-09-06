@@ -8,7 +8,6 @@ $.get(
        data = JSON.parse(json);
     }
 );
-//var station_names = ["GREENBORO", "CONFEDERATION", "CARLETON", "CARLING", "BAYVIEW"]; //station names
 var station_names = ["BAYVIEW", "CARLING", "CARLETON", "CONFEDERATION", "GREENBORO"];
 var station_id; //station id
 var curr_station_name; //current station name
@@ -48,7 +47,7 @@ function setLocation(station_index) {
     }
   }
   if(data) {
-    station_id = direction == 1 ? data[day][direction][station_location] : data[day][direction][4-station_location];
+    station_id = direction == 1 ? data[day][direction][station_location] : data[day][direction][4 - station_location];
     curr_station_name = station_names[station_location];
   }
   getNextTime();
@@ -97,21 +96,21 @@ function getNextTime() {
 function getTimeDifference(initial_hour, initial_minute, initial_second, final_hour, final_minute, final_second) {
   var hour_diff, minute_diff, second_diff;
   // setup: 00:00 becomes 24:00
-  final_hour = final_hour==0 ? 24 : final_hour; 
-  initial_hour = initial_hour==0 ? 24 : initial_hour;
+  final_hour = final_hour == 0 ? 24 : final_hour; 
+  initial_hour = initial_hour == 0 ? 24 : initial_hour;
   // standard difference
-  hour_diff = final_hour-initial_hour;
-  minute_diff = final_minute-initial_minute;
-  second_diff = final_second-initial_second;
+  hour_diff = final_hour - initial_hour;
+  minute_diff = final_minute - initial_minute;
+  second_diff = final_second - initial_second;
   
   //adjust minute
-  minute_diff = second_diff<0 ? minute_diff-1 : minute_diff;
-  second_diff = final_minute-initial_minute-1 == minute_diff ? 60+second_diff : second_diff; //reset second
+  minute_diff = second_diff < 0 ? minute_diff - 1 : minute_diff;
+  second_diff = final_minute - initial_minute - 1 == minute_diff ? 60 + second_diff : second_diff; //reset second
   
   //adjust hour
-  hour_diff = minute_diff<0 ? hour_diff-1 : hour_diff;
-  minute_diff = final_hour-initial_hour-1 == hour_diff ? 60+minute_diff : minute_diff;
-  hour_diff = hour_diff<0 ? 24+hour_diff : hour_diff;
+  hour_diff = minute_diff < 0 ? hour_diff - 1 : hour_diff;
+  minute_diff = final_hour - initial_hour - 1 == hour_diff ? 60 + minute_diff : minute_diff;
+  hour_diff = hour_diff < 0 ? 24 + hour_diff : hour_diff;
   return [hour_diff, minute_diff, second_diff];
 }
 

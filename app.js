@@ -34,7 +34,7 @@ new compressor.minify({
     }
 });
 
-/*
+
 new compressor.minify({
     type: 'uglifyjs',
     fileIn: 'assets/js/time.js',
@@ -43,7 +43,6 @@ new compressor.minify({
       if(err) console.log(err);
     }
 });
-*/
 
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
@@ -57,7 +56,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.get('/times.json', routes.times);
-//app.get('/time.html*', routes.time);
+app.get('/time.html*', routes.time);
 
 var stations = [];
 

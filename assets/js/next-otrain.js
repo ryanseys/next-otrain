@@ -24,7 +24,7 @@ function startTime() {
 
 function setDOW(now) {
   dayofweek = now;
-  if(dayofweek == 0) day = 2; //sunday
+  if(dayofweek === 0) day = 2; //sunday
   else if(dayofweek == 6) day = 1; //saturday
   else day = 0; // monday to friday
 }
@@ -36,8 +36,8 @@ function setLocation(station_index) {
   setDOW((new Date()).getDay());
 
   station_location = station_index;
-  if(station_location == 0) {
-    if(direction == 0) {
+  if(station_location === 0) {
+    if(direction === 0) {
       toggleDirection();
     }
   }
@@ -96,8 +96,8 @@ function getNextTime() {
 function getTimeDifference(initial_hour, initial_minute, initial_second, final_hour, final_minute, final_second) {
   var hour_diff, minute_diff, second_diff;
   // setup: 00:00 becomes 24:00
-  final_hour = final_hour == 0 ? 24 : final_hour; 
-  initial_hour = initial_hour == 0 ? 24 : initial_hour;
+  final_hour = final_hour === 0 ? 24 : final_hour;
+  initial_hour = initial_hour === 0 ? 24 : initial_hour;
   // standard difference
   hour_diff = final_hour - initial_hour;
   minute_diff = final_minute - initial_minute;
@@ -117,7 +117,7 @@ function getTimeDifference(initial_hour, initial_minute, initial_second, final_h
 function toggleDirection() {
   $('#hud').stop(true, true);
   var old_direction = direction;
-  if(direction == 0) {
+  if(direction === 0) {
     direction = 1;
     $(".arrows").removeClass('icon-arrow-up').addClass('icon-arrow-down');
   }
@@ -132,14 +132,12 @@ function toggleDirection() {
       $("#hud").css('display', "none");
   });
   $("#location" + station_location).select();
-  /*
   $('.stntimebtn').each(function(i, element) {
     var href = element.getAttribute('href');
     href = href.replace('&d=' + old_direction, '&d=' + direction);
     element.setAttribute('href', href);
   });
   $.pageslide.close();
-  */
 }
 //adjust vertical positioning of hud and hide
 document.getElementById('hud').style.top = document.getElementById('locationli2').offsetTop + 25 + "px";

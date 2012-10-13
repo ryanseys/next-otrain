@@ -11,9 +11,9 @@ body(onload="startTime()")
     ul(id="stations", class="nav nav-tabs nav-stacked")
       - var i = 0
       each item in items
-        a(href="javascript:$.pageslide({ direction: 'left', href:'time.html?s=#{i}&d=0' })", class="stntimebtn btn icon-time", style='float:right; position:relative; top:3px; left:-4px;') 's
+        //-a(href="javascript:$.pageslide({ direction: 'left', href:'time.html?s=#{i}&d=0' })", class="stntimebtn btn icon-time", style='float:right; position:relative; top:3px; left:-4px;') 's
         //-this div below is the same size as the button above. It is to maintain centering of the text in the list element
-        div(style='float:left; position:relative; width:42px; height:29px; top:3px; left:4px; z-index:-1;')
+        //-div(style='float:left; position:relative; width:42px; height:29px; top:3px; left:4px; z-index:-1;')
         li(id="locationli#{i}")
           a(id="location#{i}", class="tab-pane pull-center", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item
           if(i!=4) 

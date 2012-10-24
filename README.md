@@ -1,3 +1,3 @@
 # Next O-Train
 
-See [Next O-Train](http://nextotrain.com)
+See here: [Next O-Train](http://nextotrain.com)

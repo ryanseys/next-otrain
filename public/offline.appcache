@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # update rev to reset cache
-# rev: 123
+# rev: 125
 
 # save these in cache
 CACHE:
@@ -14,7 +14,7 @@ CACHE:
 /img/iphone-icon.png
 /js/bootstrap.min.js
 /js/jquery-1.7.2.min.js
-/js/next-otrain.min.js
+# /js/next-otrain.min.js
 /css/bootstrap-responsive.min.css
 /css/bootstrap.min.css
 /css/font-awesome-ie7.css

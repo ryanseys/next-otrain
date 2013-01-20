@@ -3,15 +3,21 @@
  * Module dependencies.
  */
 
+
 var express = require('express'),
     routes = require('./routes'),
     //gzip = require('connect-gzip'),
+    crypto = require('crypto'),
     compressor = require('node-minify'),
     http = require('http'),
     util = require('util'),
     htmlparser = require("htmlparser"),
-    app = module.exports = express.createServer(),
-    fs = require('fs');
+    fs = require('fs'),
+    /*
+    privateKey = fs.readFileSync('privatekey.pem').toString(),
+    certificate = fs.readFileSync('certificate.pem').toString(),
+    */
+    app = module.exports = express.createServer(/*{key: privateKey, cert: certificate}*/);
 
 // Configuration
 
@@ -57,6 +63,7 @@ app.configure('production', function(){
 app.get('/', routes.index);
 app.get('/times.json', routes.times);
 app.get('/time.html*', routes.time);
+app.post('/auth/login', routes.login);
 
 var stations = [];
 

@@ -7,6 +7,8 @@ body(onload="startTime()")
   div(id='stationlist', class="pull-center")
     h1(id="title")
       a(id="titlelink", href='/') Next <i class="icon-time"></i>Train
+      a(href="#", id="signin", class="persona-button", style="float:right; top:5px;")
+        span Sign in
     div(class='spacer')
     ul(id="stations", class="nav nav-tabs nav-stacked")
       - var i = 0

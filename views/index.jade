@@ -9,7 +9,7 @@ body(onload="startTime()")
       a(id="titlelink", href='/') Next <i class="icon-time"></i>Train
     if user
       a(href="#", id="signout", class="persona-button", style="float:right; top:9px;")
-        span(class="signout") Logout
+        span(class="signout")= user
     else
       a(href="#", id="signin", class="persona-button", style="float:right; top:9px;")
         span Login

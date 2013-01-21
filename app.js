@@ -67,14 +67,14 @@ app.configure(function(){
   app.use(app.router);
 });
 
-new compressor.minify({
+/*new compressor.minify({
     type: 'uglifyjs',
     fileIn: 'assets/js/next-otrain.js',
     fileOut: 'public/js/next-otrain.min.js',
     callback: function(err) {
       if(err) console.log(err);
     }
-});
+});*/
 
 
 new compressor.minify({

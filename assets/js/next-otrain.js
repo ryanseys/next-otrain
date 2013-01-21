@@ -156,10 +156,16 @@ navigator.id.watch({
     // A user has logged in! Here you need to:
     // 1. Send the assertion to your backend for verification and to create a session.
     // 2. Update your UI.
-    $.post('https://otrain.herokuapp.com/login', { assertion: assertion }, function(data, textStatus, jqXHR) {
-      alert(textStatus);
-      window.location = '/'; 
-    }
+    $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
+      type: 'POST',
+      url: '/login', // This is a URL on your website.
+      data: { assertion: assertion },
+      success: function(res, status, xhr) { window.location = '/'; },
+      error: function(xhr, status, err) { 
+        alert("Apparently an error occurred logging in.");
+        
+      }
+    });
   },
   onlogout: function() {
     window.location = '/logout';

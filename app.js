@@ -13,20 +13,56 @@ var express = require('express'),
     util = require('util'),
     htmlparser = require("htmlparser"),
     fs = require('fs'),
+    passport = require('passport'),
+    BrowserIDStrategy = require('passport-browserid').Strategy,
     /*
     privateKey = fs.readFileSync('privatekey.pem').toString(),
     certificate = fs.readFileSync('certificate.pem').toString(),
     */
     app = module.exports = express.createServer(/*{key: privateKey, cert: certificate}*/);
 
+
+passport.serializeUser(function(user, done) {
+  done(null, user.email);
+});
+
+passport.deserializeUser(function(email, done) {
+  done(null, { email: email });
+});
+
+persona_audience = "http://localhost:5000";
+
+passport.use(new BrowserIDStrategy({
+    audience: persona_audience
+  },
+  function(email, done) {
+    // asynchronous verification, for effect...
+    process.nextTick(function () {
+      
+      // To keep the example simple, the user's email address is returned to
+      // represent the logged-in user. In a typical application, you would want
+      // to associate the email address with a user record in your database, and
+      // return that user instead.
+
+      return done(null, { email: email });
+    });
+  }
+));
+
 // Configuration
+var store = new express.session.MemoryStore;
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   //app.use(gzip.gzip());
+  app.use(express.cookieParser("haha"));
+  app.use(express.session({ secret: 'keyboard cat', store: store }));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
 });
@@ -60,10 +96,20 @@ app.configure('production', function(){
 
 // Routes
 
+
 app.get('/', routes.index);
 app.get('/times.json', routes.times);
 app.get('/time.html*', routes.time);
-app.post('/auth/login', routes.login);
+app.post('/login', passport.authenticate('browserid', { /*failureRedirect: '/login'*/ }), function(req, res) {
+    req.session.email = req.user.email;
+    res.redirect('/');
+  });
+
+app.get('/logout', function(req, res){
+  req.session.destroy();
+  req.logout();
+  res.redirect('/');
+});
 
 var stations = [];
 

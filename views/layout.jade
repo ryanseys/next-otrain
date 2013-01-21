@@ -1,6 +1,7 @@
 
 !!!
-html(manifest="offline.appcache")
+//-html (manifest="offline.appcache")
+html
   head
     meta(charset="utf-8")
     meta(name="description", content="Track when Ottawa's Next OTrain is scheduled to arrive.")
@@ -15,8 +16,15 @@ html(manifest="offline.appcache")
     link(rel='stylesheet', href='css/jquery.pageslide.css')
     link(rel='stylesheet', href='css/persona-buttons.css')
     link(rel="icon", href="/img/favicon.png", type="image/vnd.microsoft.icon")
+    link(rel='shortcut icon', href='/img/favicon.png')
     link(rel="apple-touch-icon-precomposed", href="/img/iphone-icon.png")
     meta(name="apple-mobile-web-app-capable", content="yes")
     meta(name="viewport", content="width=device-width, initial-scale=1.0, user-scalable=no")
+    if user
+      script
+        var loggedInUser = '#{user}';
+    else
+      script
+        var loggedInUser = null;
     script(src="https://login.persona.org/include.js")
   != body

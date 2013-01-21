@@ -5,11 +5,15 @@ body(onload="startTime()")
   script(src='js/bootstrap.min.js')
   - var items = ["Bayview", "Carling", "Carleton", "Confederation", "Greenboro"]
   div(id='stationlist', class="pull-center")
-    h1(id="title")
+    h1(id="title", style="float:left;")
       a(id="titlelink", href='/') Next <i class="icon-time"></i>Train
-      a(href="#", id="signin", class="persona-button", style="float:right; top:5px;")
-        span Sign in
-    div(class='spacer')
+    if user
+      a(href="#", id="signout", class="persona-button", style="float:right; top:9px;")
+        span(class="signout") Logout
+    else
+      a(href="#", id="signin", class="persona-button", style="float:right; top:9px;")
+        span Login
+    div(class='spacer',style="clear:both;")
     ul(id="stations", class="nav nav-tabs nav-stacked")
       - var i = 0
       each item in items

@@ -2,7 +2,7 @@
 .persona-button{
   color: #fff;
   display: inline-block;
-  font-size: 14px;
+  font-size: 12px;
   font-family: Helvetica, Arial, sans-serif;
   font-weight: bold;
   line-height: 1.1;
@@ -51,7 +51,7 @@
 
 .persona-button span{
   display: inline-block;
-  padding: 5px 10px 5px 40px;
+  padding: 4px 10px 4px 36px;
 }
 
 /* Icon */

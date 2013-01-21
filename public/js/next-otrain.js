@@ -158,8 +158,8 @@ navigator.id.watch({
     // 2. Update your UI.
     $.post('https://otrain.herokuapp.com/login', { assertion: assertion }, function(data, textStatus, jqXHR) {
       alert(textStatus);
-      window.location = '/'; 
-    }
+      window.location = '/';
+    });
   },
   onlogout: function() {
     window.location = '/logout';

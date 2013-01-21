@@ -30,7 +30,7 @@ passport.deserializeUser(function(email, done) {
   done(null, { email: email });
 });
 
-persona_audience = "http://localhost:5000";
+persona_audience = "https://otrain.herokuapp.com";
 
 passport.use(new BrowserIDStrategy({
     audience: persona_audience
@@ -56,7 +56,7 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   //app.use(gzip.gzip());
-  app.use(express.cookieParser("haha"));
+  app.use(express.cookieParser());
   app.use(express.session({ secret: 'keyboard cat', store: store }));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
@@ -100,17 +100,8 @@ app.configure('production', function(){
 app.get('/', routes.index);
 app.get('/times.json', routes.times);
 app.get('/time.html*', routes.time);
-app.post('/login', passport.authenticate('browserid', { /*failureRedirect: '/login'*/ }), function(req, res) {
-    req.session.email = req.user.email;
-    res.redirect('/');
-  });
-
-app.get('/logout', function(req, res){
-  req.session.destroy();
-  req.logout();
-  res.redirect('/');
-});
-
+app.post('/login', passport.authenticate('browserid', { /*failureRedirect: '/login'*/ }), routes.login);
+app.get('/logout', routes.logout);
 var stations = [];
 
 getStations = function() {

@@ -158,7 +158,7 @@ navigator.id.watch({
     // 2. Update your UI.
     $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
       type: 'POST',
-      url: '/login', // This is a URL on your website.
+      url: 'https://otrain.herokuapp.com/login', // This is a URL on your website.
       data: { assertion: assertion },
       success: function(res, status, xhr) { window.location = '/'; },
       error: function(xhr, status, err) { 

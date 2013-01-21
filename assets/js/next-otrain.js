@@ -161,9 +161,9 @@ navigator.id.watch({
       url: '/login', // This is a URL on your website.
       data: { assertion: assertion },
       success: function(res, status, xhr) { window.location = '/'; },
-      error: function(xhr, status, err) { 
-        alert("Apparently an error occurred logging in.");
-        
+      error: function(xhr, status, err) {
+        alert("Login failed");
+        window.location = '/';
       }
     });
   },

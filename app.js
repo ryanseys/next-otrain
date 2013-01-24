@@ -30,7 +30,7 @@ passport.deserializeUser(function(email, done) {
   done(null, { email: email });
 });
 
-persona_audience = "http://otrain.herokuapp.com";
+persona_audience = "http://nextotrain.com";
 
 passport.use(new BrowserIDStrategy({
     audience: persona_audience

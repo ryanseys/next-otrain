@@ -76,7 +76,6 @@ new compressor.minify({
     }
 });
 
-
 new compressor.minify({
     type: 'uglifyjs',
     fileIn: 'assets/js/time.js',
@@ -102,6 +101,7 @@ app.get('/times.json', routes.times);
 app.get('/time.html*', routes.time);
 app.post('/login', passport.authenticate('browserid', { /*failureRedirect: '/login'*/ }), routes.login);
 app.get('/logout', routes.logout);
+app.post('/fav', routes.fav);
 var stations = [];
 
 getStations = function() {

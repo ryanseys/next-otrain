@@ -30,3 +30,8 @@ body {
   position:absolute;
   margin-left: -100px;
 }
+
+i {
+  cursor:pointer;
+}
+

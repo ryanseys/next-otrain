@@ -157,10 +157,10 @@ navigator.id.watch({
       type: 'POST',
       url: '/login',
       data: { assertion: assertion },
-      success: function(res, status, xhr) { window.location = '/'; },
-      error: function(xhr, status, err) {
-        alert("Login failed");
+      success: function(res, status, xhr) { 
         window.location = '/';
+      },
+      error: function(xhr, status, err) {
       }
     });
   },
@@ -175,6 +175,27 @@ if (signoutLink) {
     navigator.id.logout();
   };
 }
+ 
+$(document).ready(function() {
+  $('.heart').click(function () {
+    if($(this).hasClass('icon-heart')) {
+      $(this).removeClass('icon-heart');
+      $(this).addClass('icon-heart-empty');
+      favourite = null;
+    }
+    else {
+      $('.heart').removeClass('icon-heart');
+      $('.heart').addClass('icon-heart-empty');
+      $(this).addClass('icon-heart');
+      $(this).removeClass('icon-heart-empty');
+      favourite = $(this).parent().attr('station');
+    }
+    $.ajax({type: 'POST', url: '/fav', data: { fav: favourite },
+      error: function(xhr, status, err) {
+        $('.icon-heart').removeClass('icon-heart').addClass('icon-heart-empty');
+      }});
+  });
+});
 
 // When ready...
 window.addEventListener("load", function() {

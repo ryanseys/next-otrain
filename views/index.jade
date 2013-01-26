@@ -21,7 +21,12 @@ body(onload="startTime()")
         //-this div below is the same size as the button above. It is to maintain centering of the text in the list element
         //-div(style='float:left; position:relative; width:42px; height:29px; top:3px; left:4px; z-index:-1;')
         li(id="locationli#{i}")
-          a(id="location#{i}", class="tab-pane pull-center", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item
+          a(id="location#{i}", station="#{i}", class="tab-pane pull-center", data-toggle="button", onclick="setLocation(#{i})", style="font-weight:bold; font-size: 140%; cursor: pointer;")= item
+            if (fav==i)
+              i(class="heart icon-heart", style="float:left; position:relative; font-size:18pt; color:#999;")
+            else
+              i(class="heart icon-heart-empty", style="float:left; position:relative; font-size:18pt; color:#999;")
+            i(class="icon-sign-blank hidden", style="float:right; position:relative; font-size:18pt; color:#999;")
           if(i!=4) 
             i(class="arrows icon-arrow-up", style="font-size:130%; top:1px; position:relative;")
           - i++;
@@ -38,5 +43,11 @@ body(onload="startTime()")
     div(id="fb-root")
     p(style="position:relative; top:5px; bottom:0; clear:both; font-size:7pt;color:#666666;opacity:0.7;") Disclaimer: Next OTrain is in no way affiliated with <a style="color:#666666;" target="_blank" href="http://www.octranspo1.com">OC Transpo</a>.
 script(src='js/next-otrain.min.js')
+if(fav >= 0)
+  script
+    $(document).ready(function() {
+      setLocation(#{fav});
+    });
+
 
 

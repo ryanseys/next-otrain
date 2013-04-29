@@ -56,40 +56,49 @@ function setLocation(station_index) {
 function getNextTime() {
   if(!curr_station_name) curr_station_name = "Choose a station ";
   if(station_id) {
-    var now = new Date();
-    var current_hour = now.getHours();
-    var current_minute = now.getMinutes();
-    var current_second = now.getSeconds();
-    
-    var times = station_id;
-    var len = times.length;
-    var best_match;
-    for(var j = 0; j < len; j++) {
-      var arrival_time = times[j].split(':');
-      var arrival_hour = parseInt(arrival_time[0], 10);
-      var arrival_minute = parseInt(arrival_time[1], 10);
-      best_match = arrival_time;
-      if(arrival_hour > current_hour) break; //if the hour is later than the current hour
-      //if the minute is later than the current minute in the current hour
-      else if((arrival_hour == current_hour) && (arrival_minute > current_minute)) break;
-    }
-    if(((best_match[0] == current_hour) && (best_match[1] <= current_minute)) || (best_match[0] < current_hour)) {
-      //end of day
-      var day;
-      if(dayofweek == 6) day = 2; //its saturday, next day is sunday (2)
-      else if (dayofweek == 5) day = 1; //its friday, next day is sat (1)
-      else day = 0; //its sunday thru thursday (0)
-      
-      if(direction == 1) { //first direction
-        best_match = data[day][direction][station_location][0].split(':');
+    if(moment().isAfter(moment("20130902063000", "YYYYMMDDhhmmss"))) {
+      var now = new Date();
+      var current_hour = now.getHours();
+      var current_minute = now.getMinutes();
+      var current_second = now.getSeconds();
+
+      var times = station_id;
+      var len = times.length;
+      var best_match;
+      for(var j = 0; j < len; j++) {
+        var arrival_time = times[j].split(':');
+        var arrival_hour = parseInt(arrival_time[0], 10);
+        var arrival_minute = parseInt(arrival_time[1], 10);
+        best_match = arrival_time;
+        if(arrival_hour > current_hour) break; //if the hour is later than the current hour
+        //if the minute is later than the current minute in the current hour
+        else if((arrival_hour == current_hour) && (arrival_minute > current_minute)) break;
       }
-      else { //second direction
-        best_match = data[day][direction][4-station_location][0].split(':');
+      if(((best_match[0] == current_hour) && (best_match[1] <= current_minute)) || (best_match[0] < current_hour)) {
+        //end of day
+        var day;
+        if(dayofweek == 6) day = 2; //its saturday, next day is sunday (2)
+        else if (dayofweek == 5) day = 1; //its friday, next day is sat (1)
+        else day = 0; //its sunday thru thursday (0)
+
+        if(direction == 1) { //first direction
+          best_match = data[day][direction][station_location][0].split(':');
+        }
+        else { //second direction
+          best_match = data[day][direction][4-station_location][0].split(':');
+        }
       }
+      document.getElementById('next').innerHTML = "Next "+"<i class='icon-time'></i>"+"Train on " + best_match.join(':');
+      var time_difference = getTimeDifference(current_hour, current_minute, current_second, best_match[0], best_match[1], 0);
+      document.getElementById('next').innerHTML += " in " + time_difference[0] + "h:" + time_difference[1] + "m:" + time_difference[2] + "s";
     }
-    document.getElementById('next').innerHTML = "Next "+"<i class='icon-time'></i>"+"Train at " + best_match.join(':');
-    var time_difference = getTimeDifference(current_hour, current_minute, current_second, best_match[0], best_match[1], 0);
-    document.getElementById('next').innerHTML += " in " + time_difference[0] + "h:" + time_difference[1] + "m:" + time_difference[2] + "s";
+    else {
+      var mm;
+      if(direction == 1) mm = ((0 + station_location * 15) == 60) ? 0 : (0 + station_location * 15);
+      else mm = ((60 - station_location * 15) == 60) ? 0 : (60 - station_location * 15);
+      document.getElementById('next').innerHTML = "Next "+"<i class='icon-time'></i>"+"Train on " + moment("2013090206"+mm+"00", "YYYYMMDDhhmmss").format('LLL');
+      document.getElementById('next').innerHTML += " " + moment("20130902063000", "YYYYMMDDhhmmss").fromNow();
+    }
   }
 }
 
@@ -102,11 +111,11 @@ function getTimeDifference(initial_hour, initial_minute, initial_second, final_h
   hour_diff = final_hour - initial_hour;
   minute_diff = final_minute - initial_minute;
   second_diff = final_second - initial_second;
-  
+
   //adjust minute
   minute_diff = second_diff < 0 ? minute_diff - 1 : minute_diff;
   second_diff = final_minute - initial_minute - 1 == minute_diff ? 60 + second_diff : second_diff; //reset second
-  
+
   //adjust hour
   hour_diff = minute_diff < 0 ? hour_diff - 1 : hour_diff;
   minute_diff = final_hour - initial_hour - 1 == hour_diff ? 60 + minute_diff : minute_diff;
@@ -157,7 +166,7 @@ navigator.id.watch({
       type: 'POST',
       url: '/login',
       data: { assertion: assertion },
-      success: function(res, status, xhr) { 
+      success: function(res, status, xhr) {
         window.location = '/';
       },
       error: function(xhr, status, err) {
@@ -168,14 +177,14 @@ navigator.id.watch({
     window.location = '/logout';
   }
 });
- 
+
 var signoutLink = document.getElementById('signout');
 if (signoutLink) {
   signoutLink.onclick = function() {
     navigator.id.logout();
   };
 }
- 
+
 $(document).ready(function() {
   $('.heart').click(function () {
     if($(this).hasClass('icon-heart')) {
@@ -209,7 +218,7 @@ window.addEventListener("load", function() {
         '//connect.facebook.net/en_US/all.js';
       document.getElementById('fb-root').appendChild(e);
     }());
-  
+
   //google analytics
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-33989135-1']);
@@ -219,7 +228,7 @@ window.addEventListener("load", function() {
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-  
+
   //uservoice feedback
   var uvOptions = {};
   (function() {

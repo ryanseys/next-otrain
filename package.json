@@ -1,8 +1,8 @@
 {
   "name": "next-otrain",
-  "version": "0.0.1", 
+  "version": "0.0.1",
   "dependencies": {
-    "connect" : "2.x",
+    "connect": "2.x",
     "express": "2.5.11",
     "jade": ">= 0.0.1",
     "jsdom": ">= 0.2.14",
@@ -16,5 +16,9 @@
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
+  },
+  "subdomain": "next-otrain",
+  "scripts": {
+    "start": "node app.js"
   }
 }

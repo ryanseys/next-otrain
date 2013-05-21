@@ -19,7 +19,10 @@ html
     link(rel='shortcut icon', href='/img/favicon.png')
     link(rel="apple-touch-icon-precomposed", href="/img/iphone-icon.png")
     meta(name="apple-mobile-web-app-capable", content="yes")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0, user-scalable=no")
+    //Standart viewport for Android 2.3 and legacy iPhones
+    meta(name="viewport", content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width")
+    //width=device-width causes web app to be letterboxed on iPhone 5
+    meta(name="viewport", content="initial-scale=1.0,user-scalable=no,maximum-scale=1", media="(device-height: 568px)")
     if user
       script
         var loggedInUser = '#{user}';

@@ -1,7 +1,5 @@
 body
   i(id="hud", class="arrows icon-arrow-up icon-large", style="font-size:130px; text-align:center;")
-  script(type='text/javascript')
-    startTime()
   script(src='js/jquery-1.7.2.min.js')
   //-script(src="js/jquery.pageslide.min.js")
   script(src='js/bootstrap.min.js')
@@ -51,6 +49,7 @@ if(fav >= 0)
   script
     $(document).ready(function() {
       setLocation(#{fav});
+      startTime();
     });
 
 

@@ -1,0 +1,16 @@
+{
+  "name": "Next OTrain",
+  "description": "Next OTrain is a one-click solution to determine when Ottawa's O-Train is scheduled for its next arrival.",
+  "version": "1.0",
+  "launch_path": "/",
+  "icons": {
+    "60": "/img/favicon-60.png",
+    "128": "/img/favicon.png"
+  },
+  "developer": {
+    "name": "Ryan Seys",
+    "url": "https://ryanseys.com"
+  },
+  "default_locale": "en",
+  "appcache_path": "/manifest.appcache"
+}

@@ -38,7 +38,7 @@ passport.use(new BrowserIDStrategy({
   function(email, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      
+
       // To keep the example simple, the user's email address is returned to
       // represent the logged-in user. In a typical application, you would want
       // to associate the email address with a user record in your database, and
@@ -93,6 +93,9 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+express.static.mime.define({'text/cache-manifest': ['appcache']});
+express.static.mime.define({'application/x-web-app-manifest+json': ['webapp']});
+
 // Routes
 
 
@@ -102,6 +105,8 @@ app.get('/time.html*', routes.time);
 app.post('/login', passport.authenticate('browserid', { /*failureRedirect: '/login'*/ }), routes.login);
 app.get('/logout', routes.logout);
 app.post('/fav', routes.fav);
+// app.get('/manifest.webapp', routes.webapp);
+// app.get('/manifest.appcache', routes.appcache);
 var stations = [];
 
 getStations = function() {
@@ -189,8 +194,8 @@ function createFile(filename, dow) {
 }
 
 // Re-download all the files
-// *** Be careful because sometimes the 
-// octranspo server returns the same 
+// *** Be careful because sometimes the
+// octranspo server returns the same
 // time for different directions ***
 
 //createFile('./times-sunday', 3);

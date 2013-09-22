@@ -1,7 +1,6 @@
 CACHE MANIFEST
 # update rev to reset cache
-# rev: 125
-# Should really use like a hash of the files below or something like that..
+# rev: 126
 
 # save these in cache
 CACHE:
@@ -33,4 +32,3 @@ FALLBACK:
 # everything else requires network
 NETWORK:
 *
-

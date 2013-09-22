@@ -6,7 +6,6 @@
 
 var express = require('express'),
     routes = require('./routes'),
-    //gzip = require('connect-gzip'),
     crypto = require('crypto'),
     compressor = require('node-minify'),
     http = require('http'),
@@ -15,11 +14,7 @@ var express = require('express'),
     fs = require('fs'),
     passport = require('passport'),
     BrowserIDStrategy = require('passport-browserid').Strategy,
-    /*
-    privateKey = fs.readFileSync('privatekey.pem').toString(),
-    certificate = fs.readFileSync('certificate.pem').toString(),
-    */
-    app = module.exports = express.createServer(/*{key: privateKey, cert: certificate}*/);
+    app = module.exports = express.createServer();
 
 
 passport.serializeUser(function(user, done) {
@@ -50,7 +45,7 @@ passport.use(new BrowserIDStrategy({
 ));
 
 // Configuration
-var store = new express.session.MemoryStore;
+var store = new express.session.MemoryStore();
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -101,12 +96,7 @@ express.static.mime.define({'application/x-web-app-manifest+json': ['webapp']});
 
 app.get('/', routes.index);
 app.get('/times.json', routes.times);
-app.get('/time.html*', routes.time);
-app.post('/login', passport.authenticate('browserid', { /*failureRedirect: '/login'*/ }), routes.login);
-app.get('/logout', routes.logout);
 app.post('/fav', routes.fav);
-// app.get('/manifest.webapp', routes.webapp);
-// app.get('/manifest.appcache', routes.appcache);
 var stations = [];
 
 getStations = function() {

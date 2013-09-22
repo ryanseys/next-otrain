@@ -1,19 +1,12 @@
 body
   i(id="hud", class="arrows icon-arrow-up icon-large", style="font-size:130px; text-align:center;")
   script(src='js/jquery-1.7.2.min.js')
-  //-script(src="js/jquery.pageslide.min.js")
   script(src='js/bootstrap.min.js')
   script(src='js/moment.min.js')
   - var items = ["Bayview", "Carling", "Carleton", "Confederation", "Greenboro"]
   div(id='stationlist', class="pull-center")
     h1(id="title", style="float:left;")
       a(id="titlelink", href='/') Next <i class="icon-time"></i>Train
-    if user
-      a(href="#", id="signout", class="persona-button", style="float:right; top:9px;")
-        span(class="signout") Logout
-    else
-      a(href="#", id="signin", class="persona-button", style="float:right; top:9px;")
-        span Login
     div(class='spacer',style="clear:both;")
     ul(id="stations", class="nav nav-tabs nav-stacked")
       - var i = 0
@@ -36,13 +29,11 @@ body
   hr
   div(class="pull-center")
     span Created by&nbsp;
-    a(href="http://www.linkedin.com/in/rseys", target="_blank")
+    a(href="https://ryanseys.com", target="_blank")
       b Ryan Seys
   div(style="margin-top:4px", class="pull-center")
     a(class="btn btn-success btn-mini icon-heart", title="Buy me a coffee", target="_blank", href="https://www.paypal.com/webscr?cmd=_donations&business=ryan@ryanseys.com&item_name=Donate&currency_code=CAD")  Donate
     a(class="btn btn-info btn-mini icon-bullhorn", style="margin-left:4px", href="javascript:UserVoice.showPopupWidget();", title="Open feedback & support dialog (powered by UserVoice)")  feedback & support
-    div(id='like', style="left:4px;top:5px;", class="fb-like", data-href="http://nextotrain.com", data-send="false", data-layout="button_count", data-width="80", data-show-faces="false", data-font="arial")
-    div(id="fb-root")
     p(style="position:relative; top:5px; bottom:0; clear:both; font-size:7pt;color:#666666;opacity:0.7;") Disclaimer: Next OTrain is in no way affiliated with <a style="color:#666666;" target="_blank" href="http://www.octranspo1.com">OC Transpo</a>.
 script(src='js/next-otrain.min.js')
 if(fav >= 0)

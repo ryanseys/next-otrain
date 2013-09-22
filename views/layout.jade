@@ -1,4 +1,3 @@
-
 !!!
 html(manifest="manifest.appcache")
   head
@@ -22,11 +21,4 @@ html(manifest="manifest.appcache")
     meta(name="viewport", content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width")
     //width=device-width causes web app to be letterboxed on iPhone 5
     meta(name="viewport", content="initial-scale=1.0,user-scalable=no,maximum-scale=1", media="(device-height: 568px)")
-    if user
-      script
-        var loggedInUser = '#{user}';
-    else
-      script
-        var loggedInUser = null;
-    script(src="https://login.persona.org/include.js")
   != body

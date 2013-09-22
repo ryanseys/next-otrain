@@ -146,44 +146,10 @@ function toggleDirection() {
     href = href.replace('&d=' + old_direction, '&d=' + direction);
     element.setAttribute('href', href);
   });
-  $.pageslide.close();
 }
 //adjust vertical positioning of hud and hide
 document.getElementById('hud').style.top = document.getElementById('locationli2').offsetTop + 25 + "px";
 $("#hud").css('display', 'none');
-
-var signinLink = document.getElementById('signin');
-if (signinLink) {
-  signinLink.onclick = function() {
-    navigator.id.request();
-  };
-}
-
-navigator.id.watch({
-  loggedInUser: loggedInUser,
-  onlogin: function(assertion) {
-    $.ajax({
-      type: 'POST',
-      url: '/login',
-      data: { assertion: assertion },
-      success: function(res, status, xhr) {
-        window.location = '/';
-      },
-      error: function(xhr, status, err) {
-      }
-    });
-  },
-  onlogout: function() {
-    window.location = '/logout';
-  }
-});
-
-var signoutLink = document.getElementById('signout');
-if (signoutLink) {
-  signoutLink.onclick = function() {
-    navigator.id.logout();
-  };
-}
 
 $(document).ready(function() {
   $('.heart').click(function () {
@@ -209,15 +175,6 @@ $(document).ready(function() {
 // When ready...
 window.addEventListener("load", function() {
   //fb like button asyncronous load
-  window.fbAsyncInit = function() {
-      FB.init({status: true, cookie: true, xfbml: true});
-    };
-    (function() {
-      var e = document.createElement('script'); e.async = true;
-      e.src = document.location.protocol +
-        '//connect.facebook.net/en_US/all.js';
-      document.getElementById('fb-root').appendChild(e);
-    }());
 
   //google analytics
   var _gaq = _gaq || [];

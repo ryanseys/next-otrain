@@ -8,6 +8,7 @@ $.get(
        data = JSON.parse(json);
     }
 );
+
 var station_names = ["BAYVIEW", "CARLING", "CARLETON", "CONFEDERATION", "GREENBORO"];
 var station_id; //station id
 var curr_station_name; //current station name
@@ -15,12 +16,12 @@ var direction = 0; //current direction (0 or 1)
 var station_location; //current location
 var dayofweek; //day of the week (0 to 6)
 var day;
+var loop;
 
-
-function startTime() {
+var startTime = function() {
   setLocation(station_location);
-  setTimeout('startTime()', 500);
-}
+  loop = setTimeout(startTime, 500);
+};
 
 function setDOW(now) {
   dayofweek = now;
@@ -56,49 +57,40 @@ function setLocation(station_index) {
 function getNextTime() {
   if(!curr_station_name) curr_station_name = "Choose a station ";
   if(station_id) {
-    if(moment().isAfter(moment("20130902063000", "YYYYMMDDhhmmss"))) {
-      var now = new Date();
-      var current_hour = now.getHours();
-      var current_minute = now.getMinutes();
-      var current_second = now.getSeconds();
+    var now = new Date();
+    var current_hour = now.getHours();
+    var current_minute = now.getMinutes();
+    var current_second = now.getSeconds();
 
-      var times = station_id;
-      var len = times.length;
-      var best_match;
-      for(var j = 0; j < len; j++) {
-        var arrival_time = times[j].split(':');
-        var arrival_hour = parseInt(arrival_time[0], 10);
-        var arrival_minute = parseInt(arrival_time[1], 10);
-        best_match = arrival_time;
-        if(arrival_hour > current_hour) break; //if the hour is later than the current hour
-        //if the minute is later than the current minute in the current hour
-        else if((arrival_hour == current_hour) && (arrival_minute > current_minute)) break;
-      }
-      if(((best_match[0] == current_hour) && (best_match[1] <= current_minute)) || (best_match[0] < current_hour)) {
-        //end of day
-        var day;
-        if(dayofweek == 6) day = 2; //its saturday, next day is sunday (2)
-        else if (dayofweek == 5) day = 1; //its friday, next day is sat (1)
-        else day = 0; //its sunday thru thursday (0)
+    var times = station_id;
+    var len = times.length;
+    var best_match;
+    for(var j = 0; j < len; j++) {
+      var arrival_time = times[j].split(':');
+      var arrival_hour = parseInt(arrival_time[0], 10);
+      var arrival_minute = parseInt(arrival_time[1], 10);
+      best_match = arrival_time;
+      if(arrival_hour > current_hour) break; //if the hour is later than the current hour
+      //if the minute is later than the current minute in the current hour
+      else if((arrival_hour == current_hour) && (arrival_minute > current_minute)) break;
+    }
+    if(((best_match[0] == current_hour) && (best_match[1] <= current_minute)) || (best_match[0] < current_hour)) {
+      //end of day
+      var day;
+      if(dayofweek == 6) day = 2; //its saturday, next day is sunday (2)
+      else if (dayofweek == 5) day = 1; //its friday, next day is sat (1)
+      else day = 0; //its sunday thru thursday (0)
 
-        if(direction == 1) { //first direction
-          best_match = data[day][direction][station_location][0].split(':');
-        }
-        else { //second direction
-          best_match = data[day][direction][4-station_location][0].split(':');
-        }
+      if(direction == 1) { //first direction
+        best_match = data[day][direction][station_location][0].split(':');
       }
-      document.getElementById('next').innerHTML = "Next "+"<i class='icon-time'></i>"+"Train on " + best_match.join(':');
-      var time_difference = getTimeDifference(current_hour, current_minute, current_second, best_match[0], best_match[1], 0);
-      document.getElementById('next').innerHTML += " in " + time_difference[0] + "h:" + time_difference[1] + "m:" + time_difference[2] + "s";
+      else { //second direction
+        best_match = data[day][direction][4-station_location][0].split(':');
+      }
     }
-    else {
-      var mm;
-      if(direction == 1) mm = ((0 + station_location * 15) == 60) ? 0 : (0 + station_location * 15);
-      else mm = ((60 - station_location * 15) == 60) ? 0 : (60 - station_location * 15);
-      document.getElementById('next').innerHTML = "Next "+"<i class='icon-time'></i>"+"Train on " + moment("2013090206"+mm+"00", "YYYYMMDDhhmmss").format('LLL');
-      document.getElementById('next').innerHTML += " " + moment("20130902063000", "YYYYMMDDhhmmss").fromNow();
-    }
+    document.getElementById('next').innerHTML = "Next "+"<i class='icon-time'></i>"+"Train on " + best_match.join(':');
+    var time_difference = getTimeDifference(current_hour, current_minute, current_second, best_match[0], best_match[1], 0);
+    document.getElementById('next').innerHTML += " in " + time_difference[0] + "h:" + time_difference[1] + "m:" + time_difference[2] + "s";
   }
 }
 
@@ -151,27 +143,6 @@ function toggleDirection() {
 document.getElementById('hud').style.top = document.getElementById('locationli2').offsetTop + 25 + "px";
 $("#hud").css('display', 'none');
 
-$(document).ready(function() {
-  $('.heart').click(function () {
-    if($(this).hasClass('icon-heart')) {
-      $(this).removeClass('icon-heart');
-      $(this).addClass('icon-heart-empty');
-      favourite = null;
-    }
-    else {
-      $('.heart').removeClass('icon-heart');
-      $('.heart').addClass('icon-heart-empty');
-      $(this).addClass('icon-heart');
-      $(this).removeClass('icon-heart-empty');
-      favourite = $(this).parent().attr('station');
-    }
-    $.ajax({type: 'POST', url: '/fav', data: { fav: favourite },
-      error: function(xhr, status, err) {
-        $('.icon-heart').removeClass('icon-heart').addClass('icon-heart-empty');
-      }});
-  });
-});
-
 // When ready...
 window.addEventListener("load", function() {
   //fb like button asyncronous load
@@ -194,3 +165,5 @@ window.addEventListener("load", function() {
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
   })();
 });
+
+startTime();

@@ -6,7 +6,8 @@ var express = require('express'),
     util = require('util'),
     htmlparser = require("htmlparser"),
     fs = require('fs'),
-    app = module.exports = express.createServer();
+    app = module.exports = express();
+
 
 // Configuration
 var store = new express.session.MemoryStore();
